@@ -1,0 +1,11 @@
+{
+  "name": "project-main",
+  "private": true,
+  "scripts": {
+    "frontend": "npm --prefix Project-Frontend run dev",
+    "backend": "npm --prefix Project-Backend run start",
+    "db:up": "docker compose -f Project-Backend/Databases/docker-compose-mysql-phpmyadmin.yaml up -d",
+    "db:down": "docker compose -f Project-Backend/Databases/docker-compose-mysql-phpmyadmin.yaml down",
+    "start-all": "powershell -ExecutionPolicy Bypass -File ./scripts/start-all.ps1"
+  }
+}
