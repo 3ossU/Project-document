@@ -1,51 +1,49 @@
-# Project Main
+# 🏢 Project Main: Real Estate Trading and Rental Platform
+> รายวิชา CSI204 ดิจิทัลแพลตฟอร์มสำหรับพัฒนาซอฟต์แวร์ (SPU SIT)
 
 This project is now organized from a single root with 3 main parts:
-
 - `Project-Frontend` for the React/Vite app
 - `Project-Backend` for the Express API
 - `Project-Backend/Databases` for database files and Docker compose
 
-## Run From Root
+---
 
-Open a terminal in `Project-main` and use:
+## 🏗️ 1. การวิเคราะห์และออกแบบสถาปัตยกรรมซอฟต์แวร์ (Analysis & Design)
+*(หัวข้อนี้ทำเพื่อตอบ Checklist ลำดับที่ 3 และ 4)*
 
-```powershell
-npm run backend
-npm run frontend
-```
+### 🖥️ 1.1 Frontend Architecture (ส่วนหน้าบ้าน)
+- [cite_start]**โครงสร้างระบบ:** ออกแบบในรูปแบบ Component-Based Architecture และทำงานแบบ Single Page Application (SPA) ผ่าน React และ Vite [cite: 126]
+- [cite_start]**การเชื่อมต่อข้อมูล:** เปลี่ยนจากการใช้ Local Mock Data มาเป็นการดึงข้อมูลจริงจากระบบหลังบ้านผ่านระบบ API Integration เพื่อแสดงรายการอสังหาริมทรัพย์ (Property List) ของผู้ซื้อและผู้ขายได้อย่างถูกต้องเป็นเรียลไทม์ [cite: 15, 115]
+- [cite_start]**ความปลอดภัย (Security):** ควบคุมการเข้าถึงหน้าจัดการระบบและการยืนยันตัวตนของผู้ใช้งาน (เช่น Seller Profile) ด้วยระบบ JWT Authentication [cite: 128, 204]
 
-To open both frontend and backend in separate PowerShell windows:
+### ⚙️ 1.2 Backend Architecture (ส่วนหลังบ้าน)
+- [cite_start]**โครงสร้างระบบ:** ใช้ Express.js (Node.js ecosystem) ในการประมวลผล Business Logic หลักของระบบ [cite: 130, 137]
+- [cite_start]**การจัดการสภาพแวดล้อม:** แยกการตั้งค่าและมูลค่าการเชื่อมต่อฐานข้อมูล (Database Connection) ไว้ในไฟล์ `Project-Backend/.env` เพื่อความปลอดภัยตามหลัก Secure by Design [cite: 204]
 
-```powershell
-npm run start-all
-```
+### 🗄️ 1.3 Database Architecture (ระบบจัดเก็บข้อมูล)
+- [cite_start]**Relational Database (SQL):** ใช้ระบบ MySQL (จัดการผ่าน phpMyAdmin) ในการจัดเก็บข้อมูลโครงสร้างตารางหลักที่ต้องการความถูกต้องแม่นยำสูง (Data Integrity) เช่น ข้อมูลบัญชีผู้ใช้, ระบบการลงทะเบียนผู้ขาย และข้อมูลรายละเอียดอสังหาริมทรัพย์ [cite: 147]
+- [cite_start]**Database Orchestration:** ใช้ Docker Compose (`docker-compose-mysql-phpmyadmin.yaml`) ในการควบคุมและจำลองสภาพแวดล้อมของฐานข้อมูลให้ทำงานได้อย่างอิสระและยืดหยุ่นผ่าน Container [cite: 140]
 
-## Database
+---
 
-Database files:
+## 📊 2. แผนผังโครงสร้างระบบ (System Architecture Diagram)
+*(หัวข้อนี้ทำเพื่อตอบ Checklist ลำดับที่ 5 โดยใช้ Mermaid Diagram)*
 
-- `Project-Backend/Databases/jwt.sql`
-- `Project-Backend/Databases/docker-compose-mysql-phpmyadmin.yaml`
+```mermaid
+graph TD
+    User([🌐 ผู้ใช้งานระบบ / Buyers & Sellers]) -->|HTTP Requests / Port 5173| Frontend[🖥️ Project-Frontend <br> React + Vite SPA]
+    Frontend -->|API Calls / Port 3000| Backend[⚙️ Project-Backend <br> Express API]
+    
+    subgraph Security Layer
+        Backend -->|Verify Token| JWT[🔑 JWT Authentication]
+    end
 
-If you use Docker:
+    subgraph Infrastructure & Storage
+        Backend -->|Read Env Config| Env[.env Configuration]
+        Backend -->|Connect DB| MySQL[(🗄️ Docker Container <br> MySQL Database)]
+        PMA[🐳 phpMyAdmin UI] -->|Manage| MySQL
+    end
 
-```powershell
-npm run db:up
-```
-
-To stop the containers:
-
-```powershell
-npm run db:down
-```
-
-## Backend Environment
-
-Database connection values are stored in `Project-Backend/.env`.
-
-## Integration
-
-- Frontend calls `http://localhost:3000`
-- Backend connects to MySQL with the `.env` config
-- Buyer property list should use backend data, not only local mock data
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef primary fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    class Frontend,Backend primary;
