@@ -1,56 +1,94 @@
-# Project Main: Real Estate Trading and Rental Platform
-> รายวิชา CSI204 ดิจิทัลแพลตฟอร์มสำหรับพัฒนาซอฟต์แวร์ (SPU SIT)
+# SALA - Minimalist E-Commerce Clothing Platform 
 
-This project is now organized from a single root with 3 main parts:
-- Project-Frontend for the React/Vite app
-- Project-Backend for the Express API
-- Project-Backend/Databases for database files and Docker compose
+ยินดีต้อนรับสู่โปรเจกต์ **SALA** แพลตฟอร์ม E-Commerce ขายเสื้อผ้าออนไลน์สไตล์ Minimalist ที่เน้นประสบการณ์การใช้งานที่เรียบง่าย รวดเร็ว และมีระบบดูแลลูกค้าที่ครบวงจร พัฒนาขึ้นโดยผสมผสานเทคโนโลยีสมัยใหม่เพื่อรองรับการขยายตัวในอนาคต
 
 ---
 
-## 1. การวิเคราะห์และออกแบบสถาปัตยกรรมซอฟต์แวร์ (Analysis & Design)
+##  ที่มาและความสำคัญ (Background & Significance)
 
-
-### 1.1 Frontend Architecture (ส่วนหน้าบ้าน)
-- **โครงสร้างระบบ:** ออกแบบในรูปแบบ Component-Based Architecture และทำงานแบบ Single Page Application (SPA) ผ่าน React และ Vite
-- **การเชื่อมต่อข้อมูล:** เปลี่ยนจากการใช้ Local Mock Data มาเป็นการดึงข้อมูลจริงจากระบบหลังบ้านผ่านระบบ API Integration เพื่อแสดงรายการอสังหาริมทรัพย์ (Property List) ของผู้ซื้อและผู้ขายได้อย่างถูกต้องเป็นเรียลไทม์
-- **ความปลอดภัย (Security):** ควบคุมการเข้าถึงหน้าจัดการระบบและการยืนยันตัวตนของผู้ใช้งาน (เช่น Seller Profile) ด้วยระบบ JWT Authentication
-
-### 1.2 Backend Architecture (ส่วนหลังบ้าน)
-- **โครงสร้างระบบ:** ใช้ Express.js (Node.js ecosystem) ในการประมวลผล Business Logic หลักของระบบ
-- **การจัดการสภาพแวดล้อม:** แยกการตั้งค่าและมูลค่าการเชื่อมต่อฐานข้อมูล (Database Connection) ไว้ในไฟล์ Project-Backend/.env เพื่อความปลอดภัยตามหลัก Secure by Design
-
-### 1.3 Database Architecture (ระบบจัดเก็บข้อมูล)
-- **Relational Database (SQL):** ใช้ระบบ MySQL (จัดการผ่าน phpMyAdmin) ในการจัดเก็บข้อมูลโครงสร้างตารางหลักที่ต้องการความถูกต้องแม่นยำสูง (Data Integrity) เช่น ข้อมูลบัญชีผู้ใช้, ระบบการลงทะเบียนผู้ขาย และข้อมูลรายละเอียดอสังหาริมทรัพย์
-- **Database Orchestration:** ใช้ Docker Compose (docker-compose-mysql-phpmyadmin.yaml) ในการควบคุมและจำลองสภาพแวดล้อมของฐานข้อมูลให้ทำงานได้อย่างอิสระและยืดหยุ่นผ่าน Container
+ในยุคปัจจุบันการซื้อขายเสื้อผ้าออนไลน์กลายเป็นส่วนหนึ่งของชีวิตประจำวัน แต่ผู้ใช้งานมักประสบปัญหาเกี่ยวกับหน้าเว็บที่โหลดช้า ระบบค้นหาไซส์หรือสีที่ไม่แม่นยำ ขั้นตอนการชำระเงินที่ซับซ้อน รวมถึงการบริการหลังการขายที่ติดต่อยาก แบรนด์ **SALA** จึงถูกคิดค้นขึ้นมาเพื่อลบช่องว่างเหล่านั้น โดยมุ่งเน้นไปที่การสร้างแพลตฟอร์มที่ตอบโจทย์ทั้งในแง่ของ Design (ความคลีน มินิมอล), Performance (ความเร็วและความเสถียร) และ Customer Support (ความใส่ใจลูกค้า) เพื่อมอบประสบการณ์การช็อปปิ้งที่ดีที่สุด
 
 ---
 
-## 2. วิธีการใช้งาน (How to use & run)
-- npm run backend เพื่อสั่งรันระบบหลังบ้าน Express API
-- npm run frontend เพื่อสั่งรันหน้าบ้าน React + Vite
-- สั่งรัน Database Docker ผ่านคำสั่งสคริปต์ที่รูทโปรเจกต์ เช่น npm run db:up หรือเปิดผ่าน Docker Compose
+##  Pain Points (ปัญหาที่พบในปัจจุบัน)
+
+1. **ปัญหาฝั่งลูกค้า:** การซื้อสินค้าบนเว็บทั่วไปทำได้ยาก ค้นหาเสื้อผ้าไม่เจอ ขั้นตอนชำระเงินซับซ้อน ดูประวัติการซื้อย้อนหลังไม่ได้ และเมื่อสินค้ามีปัญหา (เช่น ส่งผิดไซส์) มักไม่มีช่องทางติดต่อขอความช่วยเหลือที่เป็นระบบ ต้องคอยทักแชทเพจที่ตอบช้า
+2. **ปัญหาฝั่งแอดมิน:** ขาดเครื่องมือในการจัดการร้านค้าแบบจุดเดียว (Centralized Dashboard) การเพิ่ม/ลดสินค้า ปรับเปลี่ยนหมวดหมู่เสื้อผ้า หรือจัดการข้อมูลของลูกค้าทำได้ยากและไม่เป็นระบบ
+3. **ปัญหาฝั่งบริการลูกค้า:** ไม่มีระบบ Ticket ทำให้ทีมซัพพอร์ตสับสนว่าเคสไหนแก้แล้ว เคสไหนยังค้างอยู่ ส่งผลให้แก้ปัญหาให้ลูกค้าตกหล่นและล่าช้า
 
 ---
 
-## 3. แผนผังโครงสร้างระบบ (System Architecture Diagram)
+##  วัตถุประสงค์ (Objectives)
 
+1. เพื่อพัฒนาเว็บไซต์ E-Commerce แบรนด์เสื้อผ้า SALA ที่ใช้งานง่าย รองรับการทำงานในทุกอุปกรณ์ (Responsive Design)
+2. เพื่อสร้างระบบการซื้อขาย ตะกร้าสินค้า และประวัติการสั่งซื้อที่มีประสิทธิภาพ ปลอดภัย และโปร่งใส
+3. เพื่อพัฒนาระบบ Customer Support ในรูปแบบ Ticket ที่เชื่อมต่อระหว่างลูกค้าและเจ้าหน้าที่ได้อย่างไร้รอยต่อ
+4. เพื่อสร้าง Dashboard หลังบ้านที่ช่วยให้ผู้ดูแลระบบบริหารจัดการสินค้า หมวดหมู่ และข้อมูลลูกค้าได้ในที่เดียว
+
+---
+
+##  ผู้ใช้งาน (Users) และ User Requirements
+
+ระบบนี้แบ่งผู้ใช้งานออกเป็น 3 กลุ่มหลัก โดยมีสิทธิ์และความต้องการในระบบดังนี้:
+
+### 1. Customer (ลูกค้า)
+* **Log in / Register:** สามารถสมัครสมาชิกและเข้าสู่ระบบเพื่อใช้งานฟังก์ชันต่าง ๆ ได้
+* **ค้นหาสินค้า (Search Product):** สามารถค้นหาเสื้อผ้าที่ต้องการได้อย่างสะดวกรวดเร็ว
+* **เพิ่มสินค้าลงตะกร้า (Add to Cart):** เลือกไซส์/สีของเสื้อผ้าที่ชอบแล้วกดเก็บไว้ในตะกร้าได้
+* **Check out:** ดำเนินการสั่งซื้อ ตรวจสอบยอดเงิน และชำระเงินตามขั้นตอน
+* **Buy History:** สามารถเรียกดูประวัติการสั่งซื้อเสื้อผ้าย้อนหลังของตนเองได้
+* **ยื่น Ticket Support:** สามารถส่งคำร้องขอความช่วยเหลือ ติดต่อ Support หรือแจ้งปัญหาเกี่ยวกับออเดอร์ได้อย่างเป็นระบบ
+
+### 2. Admin (ผู้ดูแลระบบ)
+* **Add สินค้า:** เพิ่มเสื้อผ้ารุ่นใหม่ ๆ เข้าสู่ระบบร้านค้า
+* **Delete สินค้า:** ลบสินค้าที่เลิกผลิตหรือไม่ได้ขายแล้วออกจากระบบ
+* **แก้ไขสินค้า (Edit Product):** อัปเดตราคา รายละเอียด รูปภาพ หรือจำนวนสต็อกสินค้า
+* **เพิ่มหมวดหมู่สินค้า (Manage Categories):** สร้างและจัดการหมวดหมู่เสื้อผ้า (เช่น เสื้อยืด, กางเกง, เดรส)
+* **จัดการข้อมูลลูกค้า (Customer Management):** ดูและบริหารจัดการข้อมูลโปรไฟล์หรือบัญชีของลูกค้า
+* **Dashboard:** ดูสรุปสถิติต่าง ๆ ยอดขาย สินค้าคงเหลือ และภาพรวมของร้านค้า
+
+### 3. Support (เจ้าหน้าที่ดูแลลูกค้า)
+* **ตอบ Ticket ลูกค้า:** เข้าไปดูคำร้อง/ข้อร้องเรียนที่ลูกค้าส่งเข้ามา และพิมพ์ตอบกลับเพื่อช่วยเหลือหรือแก้ไขปัญหาให้ลูกค้า
+
+---
+
+## 📋 System Requirements
+
+### 1. Functional Requirements 
+* **Authentication Service:** ระบบตรวจสอบสิทธิ์ (Sign-up, Log-in, Password Hashing)
+* **Product Catalogs & Search Engine:** ระบบแสดงผลสินค้า กรองหมวดหมู่ และค้นหาคำสำคัญ
+* **Shopping Cart & Checkout Engine:** ระบบคำนวณราคาสินค้าในตะกร้าและตัดสต็อกเมื่อชำระเงิน
+* **Order & Ticket Tracking System:** ระบบจัดเก็บและดึงข้อมูลประวัติการซื้อ รวมถึงระบบออกตั๋วแจ้งปัญหา (Ticket Generation)
+* **Admin Control Panel & Dashboard:** หน้าต่างสำหรับแอดมินในการทำ CRUD (Create, Read, Update, Delete) สินค้า/หมวดหมู่/ลูกค้า และแสดงกราฟสรุปยอด
+* **Support Desk Workspace:** หน้าจอเฉพาะสำหรับ Support เพื่อดึงข้อมูล Ticket ที่ค้างอยู่มาตอบปฏิสัมพันธ์
+
+### 2. Non-Functional Requirements
+* **Performance:** หน้าเว็บหน้าร้านต้องแสดงผลและโหลดข้อมูลเสร็จสิ้นภายใน 2 วินาที
+* **Security:** ป้องกันข้อมูลส่วนตัวของลูกค้าและรหัสผ่านด้วยการเข้ารหัสที่รัดกุม (เช่น bcrypt, HTTPS) ข้อมูลทางการเงินต้องปลอดภัย
+* **Scalability:** ระบบ Ticket และระบบสั่งซื้อต้องเขียนแบบแยก Service เพื่อรองรับจำนวนเคสและยอดคำสั่งซื้อที่จะเพิ่มขึ้นในอนาคต
+* **Usability:** หน้าดีไซน์ต้องมินิมอล สบายตา และใช้งานง่าย (User-Friendly) ทั้งบนมือถือและคอมพิวเตอร์
+
+---
+
+## 📐 Mermaid Diagram
+
+แผนภูมิแสดงความสัมพันธ์และการไหลของข้อมูลระหว่าง Users ทั้ง 3 กลุ่มผ่านระบบ SALA:
 
 ```mermaid
 graph TD
-    User([User / Buyers & Sellers]) -->|HTTP Requests / Port 5173| Frontend[Project-Frontend <br> React + Vite SPA]
-    Frontend -->|API Calls / Port 3000| Backend[Project-Backend <br> Express API]
+    %% Customers Path
+    Customer[Customer] -->|Log in / Search / Buy| Web[SALA Frontend App]
+    Customer -->|Open Ticket| Ticket[Ticket System]
     
-    subgraph Security Layer
-        Backend -->|Verify Token| JWT[JWT Authentication]
-    end
-
-    subgraph Infrastructure & Storage
-        Backend -->|Read Env Config| Env[.env Configuration]
-        Backend -->|Connect DB| MySQL[(Docker Container <br> MySQL Database)]
-        PMA[phpMyAdmin UI] -->|Manage| MySQL
-    end
-
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
-    classDef primary fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
-    class Frontend,Backend primary;
+    %% API & Core Systems
+    Web -->|API Requests| API(Backend: API Gateway)
+    Ticket -->|Sync Data| API
+    API -->|Read/Write Data| DB[(Database)]
+    
+    %% Admin Path
+    Admin[Admin] -->|Manage Products, Categories, Customers| Dashboard[Admin Dashboard]
+    Dashboard -->|API Requests| API
+    
+    %% Support Path
+    Support[Support Staff] -->|View & Answer Tickets| SupportWorkspace[Support Workspace]
+    SupportWorkspace -->|Update Ticket Status| Ticket
