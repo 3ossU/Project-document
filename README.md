@@ -70,6 +70,42 @@
 
 ---
 
+##  โครงสร้าง Database
+
+* **Users** เก็บข้อมูลบัญชีผู้ใช้ทั้งหมด (id, email, password_hash, role [customer, admin, support], name, created_at)
+* **Categories** เก็บหมวดหมู่เสื้อผ้า เช่น เสื้อยืด, กางเกง, แจ็คเก็ต (id, category_name, description)
+* **Products** เก็บข้อมูลตัวสินค้าหลัก (id, category_id, title, description, price, image_url, created_at)
+* **Product_Variants** เก็บสต็อกเสื้อผ้าแยกย่อยตามไซส์และสี (id, product_id, size, color, stock_quantity)
+* **Orders** ประวัติและสถานะคำสั่งซื้อ (id, user_id, total_price, status, created_at)
+* **Order_Items** รายการสินค้าในแต่ละออเดอร์ (id, order_id, variant_id, quantity, price)
+* **Tickets** ระบบเก็บประวัติตั๋วขอความช่วยเหลือ (id, user_id, order_id [null if general], subject, message, status [open, pending, closed], created_at)
+* **Ticket_Replies** ข้อความตอบกลับสำหรับพิมพ์คุยกันระหว่างลูกค้าและซัพพอร์ต (id, ticket_id, user_id, message, created_at)
+
+---
+##  เทคโนโลยีที่ใช้ (TechStack)
+
+### 1. Frontend 
+* React.js / Next.js: เฟรมเวิร์กหลักสำหรับการสร้าง UI ที่ตอบสนองรวดเร็ว
+* Tailwind CSS + Bootstrap: ผสมผสานจุดเด่นของ Utility-First (Tailwind) และ Grid System ที่เสถียร (Bootstrap) เพื่อสร้างหน้าเว็บที่มินิมอล โหลดไว และรองรับทุกหน้าจอ
+### 2. Backend
+* Node.js (Express.js): สำหรับสร้าง RESTful API ที่มีประสิทธิภาพสูงและประมวลผลเร็ว
+### 3. Database
+* MySQL: ฐานข้อมูลแบบ Relational Database ที่เหมาะสำหรับการจัดการข้อมูลที่มีความสัมพันธ์ซับซ้อน เช่น สินค้า, สต็อกแยกไซส์, ออเดอร์ และระบบ Ticket
+### 4. Authentication
+* JWT (JSON Web Tokens): สำหรับออก Token ตรวจสอบและแยกสิทธิ์การเข้าถึงระหว่าง Customer, Admin และ Support อย่างปลอดภัย
+### 5. Version Control & Tools:
+* GitHub: สำหรับเก็บ Source Code จัดการ Repository และการทำงานร่วมกัน
+* Sourcetree: โปรแกรม Git GUI Client เพื่อช่วยบริหารจัดการ Branch, ดูประวัติการ Commit และลดข้อผิดพลาดในการ Merge โค้ด
+
+---
+## การทดสอบระบบ (system testing)
+* **Postman** ใช้ทดสอบ API เพื่อดูความถูกต้องของผลลัพธ์ 
+* **jmeter** ทดสอบว่าเว็บจะรองรับผู้ใช้งานจำนวนมากได้มั้ย
+* **User Acceptance Testing / Users ทดลองจริง** ให้ผู้ใช้งานตัวอย่างทดสอบเว็บไซต์ของเราเพื่อยีนยันว่าผู้ใช้งานจะมีประสบการณ์การใช้งานที่ดีและ ตรวจสอบความถูกต้องของ User Requirement
+---
+## Prototype
+* **Figma url:**"[Linkhere](https://example.com/)"
+---
 ## 📐 Mermaid Diagram
 
 แผนภูมิแสดงความสัมพันธ์และการไหลของข้อมูลระหว่าง Users ทั้ง 3 กลุ่มผ่านระบบ SALA:
