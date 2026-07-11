@@ -121,7 +121,7 @@
 
 
 ## 10. Prototype
-* **Figma url:**"[Linkhere](https://example.com/)"
+* **Figma url:**"[Linkhere](https://www.figma.com/design/8SYpgjQJaHrKjdKS1LM6Lf/SALA-STORE?node-id=0-1&t=ocBECLIm5Vlx3eMR-1)"
 ---
 ##  11. Mermaid Diagram
 
